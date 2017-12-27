@@ -1,0 +1,30 @@
+{
+  "name": "text-to-qr",
+  "version": "1.0.0",
+  "description": "generate qr image for text",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mshoaib91/text-to-qr.git"
+  },
+  "keywords": [
+    "qr",
+    "code"
+  ],
+  "author": "Shoaib Khan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mshoaib91/text-to-qr/issues"
+  },
+  "homepage": "https://github.com/mshoaib91/text-to-qr#readme",
+  "dependencies": {
+    "qr-image": "^3.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.14.0",
+    "jshint": "^2.9.5"
+  }
+}
