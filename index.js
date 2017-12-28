@@ -36,4 +36,4 @@ let requestHandler = (req, res) => {
 };
 
 // Start a server
-http.createServer(requestHandler).listen(8080);
+http.createServer(requestHandler).listen(process.env.PORT || 8080);
