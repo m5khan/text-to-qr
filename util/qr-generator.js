@@ -9,43 +9,56 @@ var qr = require('qr-image');
 var Jimp = require('jimp');
 
 /**
- * Get text and format and create generate QR code
- * @param {*} format    png, svg or pdf
- * @param {*} size      size of the image
- * @param {*} text      text that will be in QR code
- * @returns [*] Array containing content-type and buffer respectively 
+ * Get text, size and format. Generate QR code and return buffer response to client
+ * @param {string} format - png, jpeg, bmp, svg or pdf
+ * @param {string} size - size of the image e.g 300x300
+ * @param {string} text - text that will be in QR code
+ * @param {Object} response - node http.ServerResponse object
  */
 function processQRreq(format, size, text, response) {
-    var contentType = null;
-    if(format === 'png') {
-        contentType = 'image/png';
-    } else if(format === 'svg') {
-        contentType = 'image/svg+xml';
-    } else {
-        contentType = 'application/pdf';
-    }
-    
-    if(format === 'png') {
-        var imgbuffer = qr.imageSync(text, { type: format, size:getQRsize(size)});
+    var contentType = getContentType(format);
+    if(format === 'png' || format === 'jpeg' || format === 'bmp') {
+        var imgbuffer = qr.imageSync(text, { type: 'png', size:getQRsize(size)});
             Jimp.read(imgbuffer, (err, image)=>{
                 var [w, h] = parseSizeQuery(size);
-                console.log(w,h);
                 image.contain(Number(w), Number(h))
-                .getBuffer(Jimp.MIME_PNG, (err, buffer)=>{
+                .rgba(false)
+                .getBuffer(getMimeType(format), (err, buffer)=>{
                     response.writeHead(200, {'Content-Type': contentType});
                     response.end(buffer);
                 });
             });    
     } else {
-
         response.writeHead(200, {'Content-Type': contentType});
         response.end(qr.imageSync(text, {type: format}));
     }
 }
 
 /**
+ * Returns the content type of the required format
+ * @param {string} format - format of the file that has to be sent to client 
+ * @returns {string}
+ */
+function getContentType(format) {
+    var contentType = null;
+    if(format === 'png') {
+        contentType = 'image/png';
+    } else if(format === 'jpeg') {
+        contentType = 'image/jpeg';
+    } else if(format === 'bmp') {
+        contentType = 'image/bmp';
+    } else if(format === 'svg') {
+        contentType = 'image/svg+xml';
+    } else if(format === 'pdf') {
+        contentType = 'application/pdf';
+    }
+    return contentType;
+}
+
+/**
  * Decide how big QR code buffer should be generated
  * @param {string} size      required size by user
+ * @returns {Number}
  */
 function getQRsize(size) {
     var [w, h] = parseSizeQuery(size);
@@ -62,9 +75,26 @@ function getQRsize(size) {
         
 }
 
+/**
+ * parse size string
+ * @param {string} size - size e.g 300x200 
+ * @returns {Array}  [width, height]
+ */
 function parseSizeQuery(size) {
     return size.split('x');
 }
 
+/**
+ * get mime type for the image
+ * @param {string} mime
+ * @returns {Jimp mime type} 
+ */
+function getMimeType(mime) {
+    if (mime === 'png') {
+        return Jimp.MIME_PNG;
+    } else if (mime === 'jpeg') {
+        return Jimp.MIME_JPEG;
+    } else return Jimp.MIME_BMP;
+}
 
 module.exports.process = processQRreq;

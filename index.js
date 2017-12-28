@@ -9,29 +9,25 @@ const URL = require('url');
 const querystring = require('querystring');
 
 const QRGenerator = require('./util/qr-generator');
-const TemplateGenerator = require('./util/templates');
+// const TemplateGenerator = require('./util/templates');
 
 /**
  * Http request handler
- * @param {*} req 
- * @param {*} res 
+ * @param {Object} req - http.ClientRequest
+ * @param {Object} res - http.ServerResponse
  */
 let requestHandler = (req, res) => {
     const {headers, method, url} = req;
-
     // Handle get requests
     if (method === 'GET') {
         var urlParams = URL.parse(url);
         var [, format, size, text] = urlParams.path.split('/');  
         //TODO: make the proper url with query params
-        if(format === 'png' || format === 'svg' || format === 'pdf') {
-            QRGenerator.process(format, size, text, res);
+        if(format === 'png' || format === 'jpeg' || format === 'bmp' || format === 'svg' || format === 'pdf') {
+            QRGenerator.process(format, size, querystring.unescape(text), res);
         } else if(urlParams.pathname === '/getqr') {
             var qs = querystring.parse(urlParams.query);
             QRGenerator.process(qs.type, qs.size, qs.text, res);
-            // var [contentType, qrBuffer] = QRGenerator.process(qs.type, qs.text);
-            // res.writeHead(200, { 'Content-Type': contentType});
-            // res.end(qrBuffer);
         } else {
             res.writeHead(404, { 'Content-Type': 'text/plain' });
             res.end("Not Found");
@@ -39,4 +35,5 @@ let requestHandler = (req, res) => {
     }
 };
 
+// Start a server
 http.createServer(requestHandler).listen(8080);

@@ -1,3 +1,8 @@
+/**
+ * This class is currently not in use
+ * Author: Shoaib
+ * Date: 12/28/2017
+ */
 class Templates {
     static createHtmlTemplate(callback) {
         return '' +
