@@ -1,13 +1,23 @@
 class Templates {
-    static createPngTemplate() {
-        var templ = 
+    static createHtmlTemplate(callback) {
+        return '' +
             '<html>' +
                 '<head></head>' +
                 '<body>' +
-                    '<img src="/getqr?type=png&size=500x500&text=helloworld"></img>' +
+                    callback() +
                 '</body>' +
             '</html>';
-        return templ;
+    }
+
+    static createPngTemplate(size, text) {
+        return this.createHtmlTemplate(()=>{
+            var [w,h] = this.parseSizeParam(size);
+            return '<img width='+ w +' height='+ h +' src="/getqr?type=png&text='+ text +'"></img>';
+        });
+    }
+
+    static parseSizeParam(size) {
+        return size.split('x');
     }
 }
 

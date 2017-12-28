@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/mshoaib91/text-to-qr#readme",
   "dependencies": {
+    "jimp": "^0.2.28",
     "qr-image": "^3.2.0"
   },
   "devDependencies": {
