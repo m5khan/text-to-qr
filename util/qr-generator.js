@@ -57,7 +57,7 @@ function getContentType(format) {
 
 /**
  * Decide how big QR code buffer should be generated
- * @param {string} size      required size by user
+ * @param {string} size - required size by user
  * @returns {Number}
  */
 function getQRsize(size) {
@@ -72,7 +72,6 @@ function getQRsize(size) {
     } else if(big <= 1500) {
         return 30;
     } else return 50;
-        
 }
 
 /**
@@ -86,7 +85,7 @@ function parseSizeQuery(size) {
 
 /**
  * get mime type for the image
- * @param {string} mime
+ * @param {string} mime - format for mime type
  * @returns {Jimp mime type} 
  */
 function getMimeType(mime) {
