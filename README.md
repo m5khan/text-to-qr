@@ -24,16 +24,19 @@ Three parameters are required to generate a QR Code.
 * text
 
 ##### Format
-Supported formats are `png`, `jpeg`, `bmp`, `svg` and `pdf`
+Supported formats are `png`, `jpeg`, `bmp`, `svg` and `pdf`.
+
 For Example:
 ```
 http://text2qr.herokuapp.com/svg/500x500/hello%20world
 ```
-will generate a QR Code containing text "hello world" in SVG format
+will generate a QR Code containing text "hello world" in SVG format.
+
 **Please Note:** The size is not supported in `svg` and `pdf` formats.
 
 ##### Size
-Size parameter can be a string of dimensions `widthxheight`
+Size parameter can be a string of dimensions `widthxheight`.
+
 For Example: `600x400`
 
 ##### Text
@@ -41,8 +44,8 @@ Text that you wish to encode in a QR Code.
 
 ## Development
 ### How to Run locally
-* First clone or download the project
+* First clone or download the project.
 * Run `npm install` in the project root folder to download dependencies.
-* then call `npm run start`
+* then call `npm run start`.
 The node server will be running on port 8080 or otherwise you can set the node environment variable to change the default port.
 `process.env.PORT=3000`
