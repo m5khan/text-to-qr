@@ -2,7 +2,7 @@
 A simple REST based api that generates QR-codes in different formats for the provided texts. 
 
 ## Demo
-See the **[Live Demo](http://text2qr.herokuapp.com/png/500x500/hello%20world)** deployed on heroku server.
+See the **[Live Demo](http://text2qr.herokuapp.com/getqr?type=png&size=500x500&text=Hello%20world)** deployed on heroku server.
 
 ## Details
 The api can take the url with _format_, _image size_ and _text_.
